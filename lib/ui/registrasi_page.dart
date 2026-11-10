@@ -118,7 +118,15 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     return ElevatedButton(
       child: const Text("Registrasi"),
       onPressed: () {
-        _formKey.currentState!.validate();
+        var validate = _formKey.currentState!.validate();
+        if (validate) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Registrasi berhasil, silakan login")),
+          );
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
+        }
       },
     );
   }

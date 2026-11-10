@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:belajarflutter/ui/produk_page.dart';
 import 'package:belajarflutter/ui/registrasi_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -79,7 +80,15 @@ class _LoginPageState extends State<LoginPage> {
     return ElevatedButton(
       child: const Text("Login"),
       onPressed: () {
-        _formKey.currentState!.validate();
+        var validate = _formKey.currentState!.validate();
+        if (validate) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProdukPage(),
+            ),
+          );
+        }
       },
     );
   }
