@@ -13,20 +13,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? namauser;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
   void _loadUsername() async {
     // Inisialisasi share preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // Ambil Username yang sudah tersimpan
-    namauser = prefs.getString('username');
-    // Set username on UI
     if (mounted) {
-      setState(() {});
+      setState(() {
+        namauser = prefs.getString('username');
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _loadUsername();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),

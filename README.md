@@ -42,3 +42,23 @@ Pada pertemuan ketiga, praktikum membahas tentang navigasi routing (*Routes*), p
 
 **Kesimpulan Praktikum:**  
 Pada pertemuan keempat, praktikum mempelajari pembangunan layanan RESTful API menggunakan framework CodeIgniter 4 dengan database MySQL (`toko_api`) serta pengujian endpoint menggunakan Postman. Selain sisi backend, mahasiswa juga merancang model data (`Login`, `Registrasi`, `Produk`) dan antarmuka aplikasi *Toko Kita* di Flutter meliputi halaman Registrasi dengan validasi input, halaman Login, List Produk, Detail Produk, serta Form Tambah dan Ubah Produk.
+
+---
+
+## 📝 Tugas Pertemuan 5
+**Tanggal**: Selasa, 17 November 2026
+
+| Dialog Registrasi Berhasil | Dialog Login Gagal |
+| :---: | :---: |
+| ![Dialog Registrasi Berhasil](docs/tugas-5-registrasi-sukses.png) | ![Dialog Login Gagal](docs/tugas-5-login-gagal.png) |
+
+| List Produk (REST API) | Form Tambah Produk | Detail Produk |
+| :---: | :---: | :---: |
+| ![List Produk](docs/tugas-5-list-produk.png) | ![Form Tambah Produk](docs/tugas-5-tambah-produk.png) | ![Detail Produk](docs/tugas-5-detail-produk.png) |
+
+**Kesimpulan Praktikum:**  
+Pada pertemuan kelima, praktikum membahas integrasi menyeluruh antara aplikasi Flutter dengan RESTful API CodeIgniter 4 dan database MySQL. Integrasi dilakukan melalui implementasi arsitektur **BLoC** (*Business Logic Component*) untuk memisahkan lapisan tampilan (*UI*) dengan logika bisnis serta komunikasi data. Praktikum mencakup:
+1. **Helper & Network**: Pembangunan modul `Api` untuk penanganan HTTP Request (`GET`, `POST`, `DELETE`) dengan otentikasi `Bearer Token`, `ApiUrl` yang dinamis untuk lingkungan Web (*localhost*) dan Android Emulator (*10.0.2.2*), serta penanganan galat jaringan modular melalui `AppException`.
+2. **Session Persistence**: Pemanfaatan `UserInfo` berbasis `shared_preferences` untuk menyimpan token dan user ID sehingga status autentikasi pengguna tetap terjaga saat aplikasi dibuka kembali.
+3. **Komponen Dialog UI**: Pembuatan widget umpan balik modular `SuccessDialog` dan `WarningDialog` untuk menampilkan notifikasi sukses atau gagal pada proses registrasi, login, dan modifikasi data produk.
+4. **CRUD Integration**: Menghubungkan antarmuka `ProdukPage` (menggunakan `FutureBuilder`), `ProdukForm` (tambah/edit dengan sanitasi input harga), dan `ProdukDetail` (hapus produk) ke endpoint API secara *real-time*.

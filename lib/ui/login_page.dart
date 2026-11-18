@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:belajarflutter/bloc/login_bloc.dart';
+import 'package:belajarflutter/helpers/user_info.dart';
 import 'package:belajarflutter/ui/produk_page.dart';
 import 'package:belajarflutter/ui/registrasi_page.dart';
+import 'package:belajarflutter/widget/warning_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,8 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  // ignore: unused_field
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   final _emailTextboxController = TextEditingController();
   final _passwordTextboxController = TextEditingController();
@@ -35,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 15),
                 _buttonLogin(),
                 const SizedBox(height: 30),
-                _menuRegistrasi(),
+                _menuRegistrasi()
               ],
             ),
           ),
@@ -82,15 +84,45 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         var validate = _formKey.currentState!.validate();
         if (validate) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ProdukPage(),
-            ),
-          );
+          if (!_isLoading) _submit();
         }
       },
     );
+  }
+
+  void _submit() {
+    _formKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    LoginBloc.login(
+      email: _emailTextboxController.text,
+      password: _passwordTextboxController.text,
+    ).then((value) async {
+      if (value.token != null) {
+        await UserInfo().setToken(value.token.toString());
+      }
+      if (value.userID != null) {
+        await UserInfo().setUserID(value.userID!);
+      }
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ProdukPage()),
+      );
+    }, onError: (error) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => const WarningDialog(
+          description: "Login gagal, silahkan coba lagi",
+        ),
+      );
+    });
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   // Membuat menu untuk membuka halaman registrasi
@@ -113,4 +145,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
